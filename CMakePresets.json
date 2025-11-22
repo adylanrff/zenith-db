@@ -1,0 +1,22 @@
+{
+  "$schema": "https://cmake.org/cmake/help/latest/_downloads/3e2d73bff478d88a7de0de736ba5e361/schema.json",
+  "version": 8,
+  "configurePresets": [
+    {
+      "name": "developer-debug",
+      "displayName": "Developer Debug Build",
+      "description": "A basic Debug configuration for local development.",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "developer-debug",
+      "configurePreset": "developer-debug"
+    }
+  ]
+}
