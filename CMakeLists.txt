@@ -8,8 +8,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(spdlog CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 
-
-add_executable(Zenith src/main.cpp)
+add_executable(Zenith 
+  src/main.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/internal/logger/logger.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/internal/values/value_object.cpp
+)
 
 target_include_directories(Zenith PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/internal)
 
