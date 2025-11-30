@@ -1,0 +1,25 @@
+#include "async/thread_pool.h"
+#include <future>
+#include <gtest/gtest.h>
+#include <print>
+
+TEST(ThreadPoolTest, SubmitTask) {
+  size_t sz = 10;
+  ThreadPool tp = ThreadPool(sz);
+  std::future<int> res1 = tp.submit(
+      [](int a, int b) {
+        std::cout << "halo";
+        return a + b;
+      },
+      10, 12);
+
+  std::future<int> res2 = tp.submit(
+      [](int a, int b) {
+        std::cout << "halo";
+        return a * b;
+      },
+      10, 12);
+
+  EXPECT_EQ(res1.get(), 22);
+  EXPECT_EQ(res2.get(), 120);
+}

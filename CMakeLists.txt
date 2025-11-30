@@ -12,6 +12,7 @@ add_executable(Zenith
   src/main.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/internal/logger/logger.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/internal/values/value_object.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/internal/async/thread_pool.cpp
 )
 
 target_include_directories(Zenith PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/internal)
@@ -22,7 +23,11 @@ target_link_libraries(Zenith PRIVATE fmt::fmt)
 # Testing
 find_package(GTest CONFIG REQUIRED)
 
-add_executable(ZenithTests tests/safe_queue_test.cpp)
+add_executable(ZenithTests 
+  tests/safe_queue_test.cpp
+  tests/thread_pool_test.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/internal/async/thread_pool.cpp
+)
 
 target_include_directories(ZenithTests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/internal)
 target_link_libraries(ZenithTests PRIVATE GTest::gtest GTest::gtest_main)

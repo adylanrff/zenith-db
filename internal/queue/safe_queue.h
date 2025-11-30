@@ -2,8 +2,10 @@
 
 #include <algorithm>
 #include <condition_variable>
+#include <iostream>
 #include <mutex>
 #include <queue>
+#include <stop_token>
 #include <utility>
 
 template <typename T> class SafeQueue {
@@ -11,7 +13,7 @@ private:
   std::queue<T> queue;
   std::mutex mutex;
 
-  std::condition_variable cv;
+  std::condition_variable_any cv;
 
 public:
   SafeQueue();
@@ -20,15 +22,10 @@ public:
   void push(T val);
   bool try_pop(T &out);
   void wait_and_pop(T &out);
+  bool wait_and_pop(T &out, std::stop_token stoken);
 };
 
 template <typename T> SafeQueue<T>::SafeQueue() : queue(), mutex(){};
-
-template <typename T> void SafeQueue<T>::push(T val) {
-  std::lock_guard guard(mutex);
-  queue.push(std::move(val));
-  cv.notify_one();
-};
 
 template <typename T> bool SafeQueue<T>::try_pop(T &out) {
   std::lock_guard guard(mutex);
@@ -48,3 +45,24 @@ template <typename T> void SafeQueue<T>::wait_and_pop(T &out) {
   out = std::move(queue.front());
   queue.pop();
 };
+
+template <typename T> void SafeQueue<T>::push(T val) {
+  std::lock_guard guard(mutex);
+  queue.push(std::move(val));
+  cv.notify_all();
+}
+
+template <typename T>
+bool SafeQueue<T>::wait_and_pop(T &out, std::stop_token stoken) {
+  std::unique_lock ul(mutex);
+
+  cv.wait(ul, stoken, [&] { return !queue.empty(); });
+
+  if (stoken.stop_requested()) {
+    return false;
+  }
+
+  out = std::move(queue.front());
+  queue.pop();
+  return true;
+}
