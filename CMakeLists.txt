@@ -19,3 +19,15 @@ target_include_directories(Zenith PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/internal)
 target_link_libraries(Zenith PRIVATE spdlog::spdlog)
 target_link_libraries(Zenith PRIVATE fmt::fmt)
 
+# Testing
+find_package(GTest CONFIG REQUIRED)
+
+add_executable(ZenithTests tests/safe_queue_test.cpp)
+
+target_include_directories(ZenithTests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/internal)
+target_link_libraries(ZenithTests PRIVATE GTest::gtest GTest::gtest_main)
+
+enable_testing()
+include(GoogleTest)
+gtest_discover_tests(ZenithTests)
+

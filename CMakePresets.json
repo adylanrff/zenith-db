@@ -3,7 +3,7 @@
   "version": 8,
   "configurePresets": [
     {
-      "name": "developer-debug",
+      "name": "debug",
       "displayName": "Developer Debug Build",
       "description": "A basic Debug configuration for local development.",
       "generator": "Unix Makefiles",
@@ -16,8 +16,28 @@
   ],
   "buildPresets": [
     {
-      "name": "developer-debug",
-      "configurePreset": "developer-debug"
+      "name": "debug",
+      "configurePreset": "debug"
+    },
+    {
+      "name": "tests",
+      "displayName": "Build Zenith Tests",
+      "description": "Builds the Zenith unit tests.",
+      "configurePreset": "debug",
+      "targets": ["ZenithTests"]
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "debug",
+      "configurePreset": "debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": true
+      }
     }
   ]
 }
