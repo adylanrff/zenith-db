@@ -111,6 +111,7 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+build/
 
 ### CMake Patch ###
 CMakeUserPresets.json
@@ -125,7 +126,7 @@ CMakeUserPresets.json
 
 ### vcpkg ###
 # Vcpkg
-
+vcpkg/
 vcpkg-manifest-install.log
 
 ## Manifest Mode

@@ -14,9 +14,9 @@
 
 class ThreadPool {
 private:
+  SafeQueue<std::function<void()>> task_queue;
   std::vector<std::jthread> workers;
   void worker_loop(std::stop_token stoken);
-  SafeQueue<std::function<void()>> task_queue;
 
 public:
   explicit ThreadPool(size_t num_threads);

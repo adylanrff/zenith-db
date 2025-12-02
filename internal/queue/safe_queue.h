@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include <condition_variable>
-#include <iostream>
 #include <mutex>
 #include <queue>
 #include <stop_token>

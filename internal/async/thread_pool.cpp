@@ -1,7 +1,4 @@
 #include "thread_pool.h"
-#include <functional>
-#include <iostream>
-#include <ostream>
 #include <stop_token>
 
 ThreadPool::ThreadPool(size_t num_threads) {
