@@ -10,24 +10,12 @@ ThreadPool::ThreadPool(size_t num_threads) {
   }
 }
 
-ThreadPool::~ThreadPool() {
-  // Request all jthreads to stop
-  for (auto &t : workers)
-    t.request_stop();
-
-  // Push N empty tasks so blocked workers wake up
-  for (size_t i = 0; i < workers.size(); ++i)
-    task_queue.push(nullptr);
-}
-
 void ThreadPool::worker_loop(std::stop_token stoken) {
   while (!stoken.stop_requested()) {
     std::function<void()> task;
 
     if (task_queue.wait_and_pop(task, stoken)) {
-      if (task) {
-        task();
-      }
+      task();
     }
   }
 }

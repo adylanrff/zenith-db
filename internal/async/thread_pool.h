@@ -3,9 +3,7 @@
 #include "queue/safe_queue.h"
 #include <functional>
 #include <future>
-#include <iostream>
 #include <memory>
-#include <ostream>
 #include <stop_token>
 #include <thread>
 #include <type_traits>
@@ -16,11 +14,11 @@ class ThreadPool {
 private:
   SafeQueue<std::function<void()>> task_queue;
   std::vector<std::jthread> workers;
+
   void worker_loop(std::stop_token stoken);
 
 public:
   explicit ThreadPool(size_t num_threads);
-  ~ThreadPool();
 
   template <typename Func, typename... Args>
   auto submit(Func &&f, Args &&...args) {
