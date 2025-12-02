@@ -13,6 +13,7 @@ add_executable(Zenith
   ${CMAKE_CURRENT_SOURCE_DIR}/internal/logger/logger.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/internal/values/value_object.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/internal/async/thread_pool.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/internal/networking/socket.cpp
 )
 
 target_include_directories(Zenith PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/internal)
@@ -27,6 +28,7 @@ add_executable(ZenithTests
   tests/safe_queue_test.cpp
   tests/thread_pool_test.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/internal/async/thread_pool.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/internal/networking/socket.cpp
 )
 
 target_include_directories(ZenithTests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/internal)

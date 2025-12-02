@@ -56,13 +56,13 @@ template <typename T>
 bool SafeQueue<T>::wait_and_pop(T &out, std::stop_token stoken) {
   std::unique_lock ul(mutex);
 
-  cv.wait(ul, stoken, [&] { return !queue.empty(); });
-
-  if (stoken.stop_requested()) {
-    return false;
+  // Wait returns true if predicate is true (queue has data)
+  // Wait returns false if stop requested AND queue is empty
+  if (cv.wait(ul, stoken, [this] { return !queue.empty(); })) {
+    out = std::move(queue.front());
+    queue.pop();
+    return true;
   }
 
-  out = std::move(queue.front());
-  queue.pop();
-  return true;
+  return false;
 }

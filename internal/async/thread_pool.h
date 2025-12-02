@@ -31,8 +31,6 @@ public:
 
     std::future<ReturnType> res = task->get_future();
 
-    std::cout << "running" << std::endl;
-
     task_queue.push([task]() { (*task)(); });
     return res;
   }

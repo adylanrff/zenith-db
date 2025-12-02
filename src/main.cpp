@@ -3,7 +3,6 @@
 
 #include <cstdint>
 #include <fmt/format.h>
-#include <format>
 #include <string>
 
 int main(int argc, char *argv[]) {

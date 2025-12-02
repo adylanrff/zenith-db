@@ -28,7 +28,9 @@ void ThreadPool::worker_loop(std::stop_token stoken) {
     std::function<void()> task;
 
     if (task_queue.wait_and_pop(task, stoken)) {
-      task();
+      if (task) {
+        task();
+      }
     }
   }
 }
